@@ -12,6 +12,7 @@ class TicTacToeV2 extends Component {
 
         }
         this.restartButton = this.restartButton.bind(this);
+        
     }
     renderBoxes() {
         return this.state.board.map(
@@ -48,23 +49,23 @@ class TicTacToeV2 extends Component {
                 player: this.state.player === "X" ? "O" : "X"
             })
         } this.checkWinner()
-        
+
     }
 
     restartButton() {
-       
+
         let resetBoard = this.state.board
         for (let i = 0; i < resetBoard.length; i++) {
-            if(resetBoard[i] === "X" || resetBoard[i] === "O"){
-            resetBoard[i] = null;
-            this.setState({
-                board: resetBoard,
-                player: "",
-                winner: null
-            })
+            if (resetBoard[i] === "X" || resetBoard[i] === "O") {
+                resetBoard[i] = null;
+                this.setState({
+                    board: resetBoard,
+                    player: "",
+                    winner: null
+                })
+            }
         }
-        }
-    
+
 
 
 
@@ -90,10 +91,32 @@ class TicTacToeV2 extends Component {
                 this.setState({
                     winner: this.state.player
                 })
+                this.postWinner()
             }
         }
     }
 
+    // Fetch //
+    postWinner() {
+      
+        fetch("http://localhost:5000/tictactoe",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ player: this.state.player})
+            })
+            .then(response => {
+                // update score board met response.score
+                console.log(response.status)
+                if (response.status === 200) {
+                    alert("logged in")
+                } else if (response.status === 403) {
+                    alert("name and password combination does not exist")
+                }
+            })
+    }
 
 
     render() {
@@ -110,7 +133,7 @@ class TicTacToeV2 extends Component {
 
                     </div>
 
-                   
+
                 </div>
                 <button onClick={this.restartButton}>restart</button>
 
