@@ -2,17 +2,19 @@ import React, { Fragment } from 'react';
 import { Component } from 'react';
 import Player from './playerchoose';
 
+
 class TicTacToeV2 extends Component {
     constructor(props) {
         super(props)
         this.state = {
             board: Array(9).fill(null),
             player: "",
-            winner: null
-
+            winner: null,
+            scoreX: null,
+            scoreO: null
         }
         this.restartButton = this.restartButton.bind(this);
-        
+
     }
     renderBoxes() {
         return this.state.board.map(
@@ -95,26 +97,60 @@ class TicTacToeV2 extends Component {
             }
         }
     }
-
-    // Fetch //
+  
     postWinner() {
-      
+
         fetch("http://localhost:5000/tictactoe",
             {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ player: this.state.player})
+                body: JSON.stringify({ player: this.state.player })
             })
-            .then(response => {
-                // update score board met response.score
-                console.log(response.status)
-                if (response.status === 200) {
-                    alert("logged in")
-                } else if (response.status === 403) {
-                    alert("name and password combination does not exist")
-                }
+            // .then(respond =>
+
+              
+
+            //     respond.json()
+
+            // )
+            // .then(data => {
+           
+            //     this.setState({
+            //         scoreX: data[0].score,
+            //         scoreO: data[1].score
+            //     })
+            //     console.log(data[0].player)
+            //     console.log(data[0].score)
+
+            // })
+    }
+    winCount(){
+        fetch("http://localhost:5000/tictactoe",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ player: this.state.player })
+            })
+            .then(respond =>
+
+              
+
+                respond.json()
+
+            )
+            .then(data => {
+           
+                this.setState({
+                    scoreX: data[0].score,
+                    scoreO: data[1].score
+                })
+                console.log(data[0].player)
+                console.log(data[0].score)
+
             })
     }
 
@@ -127,6 +163,13 @@ class TicTacToeV2 extends Component {
                 <div className="container">
 
                     <h1 className="title">TicTacToeV2</h1>
+                    <div>
+                        <h1>WinCount</h1>
+                        <h3>Player X:{this.state.scoreX}</h3>
+                        <h3>Player O:{this.state.scoreO}</h3>
+
+                    </div>
+
 
                     <div className="board">
                         {this.renderBoxes()}

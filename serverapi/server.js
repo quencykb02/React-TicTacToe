@@ -30,31 +30,35 @@ app.post('/tictactoe', (request, respond) => {
     // checken of player en score binnen komen.
     console.log("this player won");
     console.log(request.body.player)
-    
-// INSERT INTO stats (player, score) VALUES(?, ?)//
-    
 
-// update score where player = ? //
+    // INSERT INTO stats (player, score) VALUES(?, ?)//
 
+
+
+    // update score where player = ? //
     db.run('UPDATE stats SET score = score + 1 WHERE player = ?', [request.body.player], (err) => {
         if (err) {
             return console.error(err.message);
         }
+    });
 
     //  db.run(laat de huidige score zien)
     // respond.json(huidige score);
 
-    db.run('SELECT score FROM stats WHERE player = ?', (err) => {
-        respond.json(score)
-    } 
+    db.all('SELECT * FROM stats', (err, row) => {
+        console.log(row)
+        if (row.length > 0) {
+            respond.send(row);
+            // respond.json({ row }) // stuur het score op als response naar waar dit gecalled is.
+
+        } else {
+            respond.status(403).send({ errorCode: '403' });
+        }
+    });
+
     
-    )
-        // if(row.length > 0){
-        //     respond.json({row})
-        // }else {
-        //     respond.status(403).send({ errorCode: '403' });
-        // }
-    })
+
+
 
 })
 
