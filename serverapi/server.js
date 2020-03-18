@@ -21,11 +21,10 @@ app.use(
     cors()
 )
 
+// app.get('/', function (request, respond) {
+//     respond.send("Hello World!")
 
-app.get('/', function (request, respond) {
-    respond.send("Hello World!")
-
-})
+// })
 app.post('/tictactoe', (request, respond) => {
     // checken of player en score binnen komen.
     console.log("this player won");
@@ -42,8 +41,19 @@ app.post('/tictactoe', (request, respond) => {
         }
     });
 
-    //  db.run(laat de huidige score zien)
-    // respond.json(huidige score);
+    db.all('SELECT * FROM stats', (err, row) => {
+        console.log(row)
+        if (row.length > 0) {
+            respond.send(row);
+            // respond.json({ row }) // stuur het score op als response naar waar dit gecalled is.
+
+        } else {
+            respond.status(403).send({ errorCode: '403' });
+        }
+    });
+})
+
+app.get('/tictactoe', (request, respond) => {
 
     db.all('SELECT * FROM stats', (err, row) => {
         console.log(row)
@@ -55,11 +65,6 @@ app.post('/tictactoe', (request, respond) => {
             respond.status(403).send({ errorCode: '403' });
         }
     });
-
-    
-
-
-
 })
 
 

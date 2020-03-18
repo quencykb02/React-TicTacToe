@@ -14,14 +14,16 @@ class TicTacToeV2 extends Component {
             scoreO: null
         }
         this.restartButton = this.restartButton.bind(this);
-
+        this.winCount()
     }
     renderBoxes() {
         return this.state.board.map(
             (box, index) =>
                 <div className="box" key={index} onClick={() => this.handleClick(index)}>
                     {box}
+
                 </div>
+
         )
     }
 
@@ -51,6 +53,8 @@ class TicTacToeV2 extends Component {
                 player: this.state.player === "X" ? "O" : "X"
             })
         } this.checkWinner()
+
+
 
     }
 
@@ -94,10 +98,11 @@ class TicTacToeV2 extends Component {
                     winner: this.state.player
                 })
                 this.postWinner()
+
             }
         }
     }
-  
+
     postWinner() {
 
         fetch("http://localhost:5000/tictactoe",
@@ -108,42 +113,42 @@ class TicTacToeV2 extends Component {
                 },
                 body: JSON.stringify({ player: this.state.player })
             })
-            // .then(respond =>
+        .then(respond =>
 
-              
 
-            //     respond.json()
 
-            // )
-            // .then(data => {
-           
-            //     this.setState({
-            //         scoreX: data[0].score,
-            //         scoreO: data[1].score
-            //     })
-            //     console.log(data[0].player)
-            //     console.log(data[0].score)
+            respond.json()
 
-            // })
+        )
+        .then(data => {
+
+            this.setState({
+                scoreX: data[0].score,
+                scoreO: data[1].score
+            })
+            console.log(data[0].player)
+            console.log(data[0].score)
+
+        })
     }
-    winCount(){
+    winCount() {
         fetch("http://localhost:5000/tictactoe",
             {
-                method: "POST",
+                method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ player: this.state.player })
+
             })
             .then(respond =>
 
-              
+
 
                 respond.json()
 
             )
             .then(data => {
-           
+
                 this.setState({
                     scoreX: data[0].score,
                     scoreO: data[1].score
@@ -165,6 +170,7 @@ class TicTacToeV2 extends Component {
                     <h1 className="title">TicTacToeV2</h1>
                     <div>
                         <h1>WinCount</h1>
+
                         <h3>Player X:{this.state.scoreX}</h3>
                         <h3>Player O:{this.state.scoreO}</h3>
 
