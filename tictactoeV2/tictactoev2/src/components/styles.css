@@ -1,0 +1,94 @@
+.base-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.base-container .header {
+  font-size: 24px;
+  font-family: sans-serif;
+}
+
+.base-container .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.base-container .form {
+  margin-top: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.base-container .form .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.base-container .form .form-group label {
+  font-size: 20px;
+}
+
+.base-container .form .form-group input {
+  margin-top: 6px;
+  min-width: 18em;
+  height: 37px;
+  padding: 0px 10px;
+  font-size: 16px;
+  font-family: sans-serif;
+  background-color: salmon;
+  border: 0;
+  border-radius: 4px;
+  margin-bottom: 31px;
+  -webkit-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+
+.base-container .form .form-group input:focus {
+  outline: none;
+  -webkit-box-shadow: 0px 0xp 12px 0.8px #0eb1ce96;
+          box-shadow: 0px 0xp 12px 0.8px #0eb1ce96;
+}
+
+.base-container .form .footer {
+  margin-top: 3em;
+}
+.header{
+  text-align: center;
+}
+.footer{
+  display: flex;
+  justify-content: center;
+}
+/*# sourceMappingURL=styles.css.map */
