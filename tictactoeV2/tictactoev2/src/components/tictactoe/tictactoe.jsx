@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Component } from 'react';
 import Player from './playerchoose';
+import './tictactoe.css';
 
 
 class TicTacToeV2 extends Component {
@@ -184,7 +185,9 @@ class TicTacToeV2 extends Component {
 
 
                 </div>
-                <button onClick={this.restartButton}>restart</button>
+                <button onClick={this.restartButton}>restart</button>&nbsp;&nbsp;
+                <a href="leaderboard"><button>LeaderBoard</button></a>&nbsp;&nbsp;
+                <a href="home"><button>Home</button></a>
 
 
             </Fragment>

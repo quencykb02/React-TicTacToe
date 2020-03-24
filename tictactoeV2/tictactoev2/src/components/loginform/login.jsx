@@ -1,12 +1,7 @@
 import React from 'react';
 import './login.css';
-import { withRouter } from 'react-router-dom'
 import { Redirect } from 'react-router-dom';
-// import { Redirect } from 'react-router-dom';
-// import { browserHistory } from 'react-router'
-// import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
-// import { browserHistory } from 'react-router-dom'
-// import TicTacToeV2 from './tictactoe.jsx';
+
 
 
 class Login extends React.Component {
@@ -79,7 +74,7 @@ class Login extends React.Component {
 
     render() {
         if (this.state.isLoggedIn === true) {
-            return <Redirect to="/tictactoe" />
+            return <Redirect to="/home" />
         }
         return (
 
@@ -113,4 +108,4 @@ class Login extends React.Component {
 }
 
 
-export default withRouter(Login);
+export default Login;
