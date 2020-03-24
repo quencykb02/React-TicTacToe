@@ -1,18 +1,24 @@
 import React from 'react';
-// import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import './login.css';
+import { withRouter } from 'react-router-dom'
 import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
+// import { browserHistory } from 'react-router'
+// import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+// import { browserHistory } from 'react-router-dom'
 // import TicTacToeV2 from './tictactoe.jsx';
 
 
-export class Login extends React.Component {
+class Login extends React.Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
             userinputName: '',
-            userinputPassword: ''
-           
+            userinputPassword: '',
+            isLoggedIn: false
+
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -49,7 +55,12 @@ export class Login extends React.Component {
             .then(response => {
                 console.log(response.status)
                 if (response.status === 200) {
-                   return <Redirect to ='/tictactoe'/>
+                    this.setState({
+                        isLoggedIn: true
+                    })
+
+
+
                 } else if (response.status === 403) {
                     alert("name and password combination does not exist")
                 }
@@ -65,34 +76,41 @@ export class Login extends React.Component {
         }
 
     }
+
     render() {
+        if (this.state.isLoggedIn === true) {
+            return <Redirect to="/tictactoe" />
+        }
         return (
-        
-                <div className="base-container">
-                    <div className="header">Login</div>
-                    <div className="content">
-                        <div className="form">
-                            <div className="form-group">
-                                <label htmlFor="username">Name</label>
-                                <input type="text" name="username" placeholder="username" onChange={this.onChangeText} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <input type="password" name="password" placeholder="password" onChange={this.onChangeText} />
-                            </div>
+
+            <div className="base-container">
+                <div className="header">Login</div>
+                <div className="content">
+                    <div className="form">
+                        <div className="form-group">
+                            <label htmlFor="username">Name</label>
+                            <input type="text" name="username" placeholder="username" onChange={this.onChangeText} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input type="password" name="password" placeholder="password" onChange={this.onChangeText} />
                         </div>
                     </div>
-                    <div className="footer">
-                        <button onClick={this.fetchData} type="button" className="btn">Login </button>
-                    </div>
+                </div>
+                <div className="footer">
+                    <button onClick={this.fetchData} type="button" className="btn">Login </button>
+                </div>
 
-                    {/* <Switch>
+                {/* <Switch>
                         <Route exact path='/' component={Login} />
                         <Route path='/tictactoe' component={TicTacToeV2} />
                     </Switch> */}
-                    {/* https://tylermcginnis.com/react-router-programmatically-navigate/ */}
-                </div>
-            
+                {/* https://tylermcginnis.com/react-router-programmatically-navigate/ */}
+            </div>
+
         )
     }
 }
+
+
+export default withRouter(Login);
