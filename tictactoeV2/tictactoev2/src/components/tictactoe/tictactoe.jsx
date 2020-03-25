@@ -12,10 +12,13 @@ class TicTacToeV2 extends Component {
             player: "",
             winner: null,
             scoreX: null,
-            scoreO: null
+            scoreO: null,
+            firstPlayer: null,
+            secondPlayer: null
         }
         this.restartButton = this.restartButton.bind(this);
         this.winCount()
+        
     }
     renderBoxes() {
         return this.state.board.map(
@@ -31,8 +34,8 @@ class TicTacToeV2 extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(e.target.player.value);
-        if (e.target.player.value === "X") {
+
+        if (e.target.firstPlayer.placeholder === "O") {
             this.setState({
                 player: "X"
             })
@@ -44,6 +47,13 @@ class TicTacToeV2 extends Component {
 
 
     }
+    handleInputChange = (e) => {
+        e.preventDefault()
+        this.setState({
+            [e.target.name]: e.target.value
+            
+        })
+        }
     handleClick(index) {
         let newBoard = this.state.board
 
@@ -162,18 +172,20 @@ class TicTacToeV2 extends Component {
 
 
     render() {
+        const {firstPlayer} = this.state
+        const {secondPlayer} = this.state
         return (
 
             <Fragment>
-                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} />
+                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} handleInputChange={this.handleInputChange} />
                 <div className="container">
 
                     <h1 className="title">TicTacToeV2</h1>
                     <div>
                         <h1>WinCount</h1>
 
-                        <h3>Player X:{this.state.scoreX}</h3>
-                        <h3>Player O:{this.state.scoreO}</h3>
+                        <h3>{firstPlayer}:{this.state.scoreX}</h3>
+                        <h3>{secondPlayer}:{this.state.scoreO}</h3>
 
                     </div>
 
