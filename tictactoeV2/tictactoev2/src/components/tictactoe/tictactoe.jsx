@@ -18,7 +18,7 @@ class TicTacToeV2 extends Component {
         }
         this.restartButton = this.restartButton.bind(this);
         this.winCount()
-        
+
     }
     renderBoxes() {
         return this.state.board.map(
@@ -35,7 +35,7 @@ class TicTacToeV2 extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
 
-        if (e.target.firstPlayer.placeholder === "O") {
+        if (e.target.firstPlayer.placeholder === "X") {
             this.setState({
                 player: "X"
             })
@@ -51,9 +51,9 @@ class TicTacToeV2 extends Component {
         e.preventDefault()
         this.setState({
             [e.target.name]: e.target.value
-            
+
         })
-        }
+    }
     handleClick(index) {
         let newBoard = this.state.board
 
@@ -102,12 +102,22 @@ class TicTacToeV2 extends Component {
 
         for (let index = 0; index < winLines.length; index++) {
             const [a, b, c] = winLines[index];
+            
             if (this.state.board[a] && this.state.board[a] === this.state.board[b] && this.state.board[a] === this.state.board[c]) {
 
                 alert('You Won!');
-                this.setState({
-                    winner: this.state.player
-                })
+               if (this.state.player === "X") {
+                    this.setState({
+                        winner: this.state.firstPlayer
+                    })
+                    
+                }else{
+                    this.setState({
+                        winner: this.state.secondPlayer
+                    })
+                }
+              
+
                 this.postWinner()
 
             }
@@ -124,23 +134,23 @@ class TicTacToeV2 extends Component {
                 },
                 body: JSON.stringify({ player: this.state.player })
             })
-        .then(respond =>
+            .then(respond =>
 
 
 
-            respond.json()
+                respond.json()
 
-        )
-        .then(data => {
+            )
+            .then(data => {
 
-            this.setState({
-                scoreX: data[0].score,
-                scoreO: data[1].score
+                this.setState({
+                    scoreX: data[0].score,
+                    scoreO: data[1].score
+                })
+                console.log(data[0].player)
+                console.log(data[0].score)
+
             })
-            console.log(data[0].player)
-            console.log(data[0].score)
-
-        })
     }
     winCount() {
         fetch("http://localhost:5000/tictactoe",
@@ -172,17 +182,18 @@ class TicTacToeV2 extends Component {
 
 
     render() {
-        const {firstPlayer} = this.state
-        const {secondPlayer} = this.state
+        const { firstPlayer } = this.state
+        const { secondPlayer } = this.state
         return (
 
             <Fragment>
-                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} handleInputChange={this.handleInputChange} />
+                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} handleInputChange={this.handleInputChange} restartButton={this.restartButton} />
                 <div className="container">
 
                     <h1 className="title">TicTacToeV2</h1>
                     <div>
                         <h1>WinCount</h1>
+                        <h1>Winner is :{this.state.winner} </h1>
 
                         <h3>{firstPlayer}:{this.state.scoreX}</h3>
                         <h3>{secondPlayer}:{this.state.scoreO}</h3>
