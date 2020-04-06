@@ -1,10 +1,10 @@
 import React from 'react';
-import './login.css';
-import { Redirect } from 'react-router-dom';
-import { login } from '../utilis/utilis';
+import './register.css';
+// import { Redirect } from 'react-router-dom';
+// import { login } from '../utilis/utilis';
 
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     constructor(props) {
         super(props)
@@ -12,7 +12,9 @@ class Login extends React.Component {
         this.state = {
             userinputName: '',
             userinputPassword: '',
-            isLoggedIn: false
+            isRegistered: false
+
+
 
         }
         this.onChangeText = this.onChangeText.bind(this);
@@ -20,7 +22,7 @@ class Login extends React.Component {
     }
 
     onChangeText(e) {
-        console.log(this.state)
+
         if (e.target.placeholder === 'username') {
             this.setState({
                 userinputName: e.target.value,
@@ -36,10 +38,9 @@ class Login extends React.Component {
 
 
     }
-
     fetchData(e) {
         e.preventDefault();
-        fetch("http://localhost:5000/login",
+        fetch("http://localhost:5000/register",
             {
                 method: "POST",
                 headers: {
@@ -47,41 +48,30 @@ class Login extends React.Component {
                 },
                 body: JSON.stringify({ name: this.state.userinputName, password: this.state.userinputPassword })
             })
-            .then(response => {
-                console.log(response.status)
-                if (response.status === 200) {
-                    this.setState({
-                        isLoggedIn: true
-                    })
-                    alert("logged in")
+
+        .then(response => {
+   
+            if (response.status === 200) {
+                this.setState({
+                    isRegistered: true
+                })
+                alert("welcome to the club!")
 
 
 
-                } else if (response.status === 403) {
-                    alert("name and password combination does not exist")
-                }
-            })
+            } else if (response.status === 403) {
+                alert("sorry you cant join the club")
+            }
+        })
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        const { value } = this.state;
-        const re = new RegExp("^(?=.[A-Za-z])(?=.\\d)(?=.[@$!%#?&])[A-Za-z\\d@$!%*#?&]{8,}$");
-        const isOk = re.test(value); if (!isOk) {
-            return console.log(isOk);
-        }
-
-    }
 
     render() {
-        if (this.state.isLoggedIn === true) {
-            login()
-            return <Redirect to="/home" />
-        }
+
         return (
 
             <div className="base-container">
-                <div className="header">Login</div>
+                <div className="header">Register</div>
                 <div className="content">
                     <div className="form">
                         <div className="form-group">
@@ -95,8 +85,9 @@ class Login extends React.Component {
                     </div>
                 </div>
                 <div className="footer">
-                    <button onClick={this.fetchData} type="button" className="btn">Login </button>
-                   <a href="/register"> <button>Register</button></a>
+                    <button onClick={this.fetchData} type="button" className="btn">Register</button>
+                    <a href="/"><button>Login</button></a>
+                    {/* <button onClick="/">Register</button> */}
                 </div>
 
                 {/* <Switch>
@@ -111,4 +102,4 @@ class Login extends React.Component {
 }
 
 
-export default Login;
+export default Register;

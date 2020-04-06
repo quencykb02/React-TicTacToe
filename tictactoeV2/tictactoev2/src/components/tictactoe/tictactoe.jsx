@@ -17,7 +17,7 @@ class TicTacToeV2 extends Component {
             secondPlayer: null
         }
         this.restartButton = this.restartButton.bind(this);
-        this.winCount()
+        
 
     }
     renderBoxes() {
@@ -44,7 +44,7 @@ class TicTacToeV2 extends Component {
                 player: "O"
             })
         }
-
+        this.winCount()
 
     }
     handleInputChange = (e) => {
@@ -78,14 +78,15 @@ class TicTacToeV2 extends Component {
                 this.setState({
                     board: resetBoard,
                     player: "",
-                    winner: null
+                    winner: null,
+                    scoreX: null,
+                    scoreO: null,
+                    firstPlayer: null,
+                    secondPlayer: null
+
                 })
             }
         }
-
-
-
-
     }
     checkWinner() {
         let winLines = [
@@ -102,21 +103,21 @@ class TicTacToeV2 extends Component {
 
         for (let index = 0; index < winLines.length; index++) {
             const [a, b, c] = winLines[index];
-            
+
             if (this.state.board[a] && this.state.board[a] === this.state.board[b] && this.state.board[a] === this.state.board[c]) {
 
                 alert('You Won!');
-               if (this.state.player === "X") {
+                if (this.state.player === "X") {
                     this.setState({
                         winner: this.state.firstPlayer
                     })
-                    
-                }else{
+
+                } else {
                     this.setState({
                         winner: this.state.secondPlayer
                     })
                 }
-              
+
 
                 this.postWinner()
 
@@ -187,7 +188,7 @@ class TicTacToeV2 extends Component {
         return (
 
             <Fragment>
-                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} handleInputChange={this.handleInputChange} restartButton={this.restartButton} />
+                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} handleInputChange={this.handleInputChange}  />
                 <div className="container">
 
                     <h1 className="title">TicTacToeV2</h1>
