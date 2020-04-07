@@ -11,8 +11,10 @@ class HomeScreen extends Component {
 
         this.state = {
             isLoggedOut: false
+// userName:  localStorage.getItem('TestLogin')
         }
         this.logOut = this.logOut.bind(this);
+       
     }
     logOut() {
         this.setState({
@@ -26,6 +28,7 @@ class HomeScreen extends Component {
         }
         return (
             <div className="homescreen_container">
+                {/* <h1>Welcome: {this.state.userName}</h1> */}
                 <h1 className="homescreen_title">Choose your game</h1>
                 <div>
                     <h3>Tic-Tac-Toe</h3>

@@ -52,24 +52,26 @@ app.post('/tictactoe', (request, respond) => {
 
 
 app.post('/login', (request, respond) => {
-    db.all('SELECT * FROM users WHERE name=? AND password=?', [request.body.name, request.body.password], (err,row) =>{
-        if(row.length > 0){
-            respond.json({row})
-        }else {
+    db.all('SELECT * FROM users WHERE name=? AND password=?', [request.body.name, request.body.password], (err, row) => {
+        if (row.length > 0) {
+            respond.json({ row })
+        } else {
             respond.status(403).send({ errorCode: '403' });
         }
     })
-    
-    })
-    app.post('/register', (request, respond) => {
-        console.log(request.body.name)
-        console.log(request.body.password)
-        db.all('INSERT INTO users (name, password,) ', [request.body.name, request.body.password,], (err,row) =>{
-          
-        });
-        
-        
-        })
+
+})
+app.post('/register', (request, respond) => {
+    console.log(request.body.userinputName)
+    console.log(request.body.userinputPassword)
+    db.all('INSERT INTO users (name, password) VALUES (?, ?) ', [request.body.userinputName, request.body.userinputPassword], (err, row) => {
+        if (err != null) {
+            respond.status(403).send({ errorCode: "403" })
+        } else {
+            respond.status(200).send({ errorCode: "200" })
+        }
+    });
+})
 
 
 

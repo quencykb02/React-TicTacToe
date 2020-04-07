@@ -1,15 +1,16 @@
+// verander naar js ipv jsx
 const TOKEN_KEY = 'jwt';
 
-export const login = () => {
-    localStorage.setItem(TOKEN_KEY, 'TestLogin');
+export const login = (param) => {
+    localStorage.setItem('TestLogin', param);
 }
 
 export const logout = () => {
-    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem('TestLogin');
 }
 
 export const isLogin = () => {
-    if (localStorage.getItem(TOKEN_KEY)) {
+    if (localStorage.getItem('TestLogin')) {
         return true;
     }
 

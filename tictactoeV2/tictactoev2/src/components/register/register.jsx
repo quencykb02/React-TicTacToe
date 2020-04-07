@@ -1,6 +1,6 @@
 import React from 'react';
 import './register.css';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 // import { login } from '../utilis/utilis';
 
 
@@ -40,34 +40,32 @@ class Register extends React.Component {
     }
     fetchData(e) {
         e.preventDefault();
+
         fetch("http://localhost:5000/register",
             {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name: this.state.userinputName, password: this.state.userinputPassword })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userinputName: this.state.userinputName, userinputPassword: this.state.userinputPassword })
             })
-
-        .then(response => {
-   
-            if (response.status === 200) {
-                this.setState({
-                    isRegistered: true
-                })
-                alert("welcome to the club!")
-
-
-
-            } else if (response.status === 403) {
-                alert("sorry you cant join the club")
-            }
-        })
+            .then(response => {
+                console.log(response.status)
+                if (response.status === 200) {
+                    this.setState({
+                        isRegistered: true
+                    })
+                    alert("welcome!")
+                } else if (response.status === 403) {
+                    alert("something went wrong with the registration")
+                }
+            })
     }
 
 
     render() {
+        if (this.state.isRegistered === true) {
 
+            return <Redirect to="/" />
+        }
         return (
 
             <div className="base-container">
