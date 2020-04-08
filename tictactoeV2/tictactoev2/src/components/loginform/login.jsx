@@ -75,7 +75,7 @@ class Login extends React.Component {
 
     render() {
         if (this.state.isLoggedIn === true) {
-            login()
+            login(this.state.userinputName)
             return <Redirect to="/home" />
         }
         return (

@@ -5,15 +5,18 @@ import leaderboard from './leaderboard.jpg';
 import { logout } from '../utilis/utilis';
 import { Redirect } from 'react-router-dom';
 
+
 class HomeScreen extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            isLoggedOut: false
-// userName:  localStorage.getItem('TestLogin')
+            isLoggedOut: false,
+            userName: localStorage.getItem('TestLogin')
+
         }
         this.logOut = this.logOut.bind(this);
+        
        
     }
     logOut() {
@@ -28,7 +31,7 @@ class HomeScreen extends Component {
         }
         return (
             <div className="homescreen_container">
-                {/* <h1>Welcome: {this.state.userName}</h1> */}
+                <h1>Welcome: {this.state.userName}</h1>
                 <h1 className="homescreen_title">Choose your game</h1>
                 <div>
                     <h3>Tic-Tac-Toe</h3>

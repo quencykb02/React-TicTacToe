@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Component } from 'react';
-import Player from './playerchoose';
+// import Player from './playerchoose';
 import './tictactoe.css';
 
 
@@ -17,7 +17,7 @@ class TicTacToeV2 extends Component {
             secondPlayer: null
         }
         this.restartButton = this.restartButton.bind(this);
-        
+
 
     }
     renderBoxes() {
@@ -133,7 +133,7 @@ class TicTacToeV2 extends Component {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ player: this.state.player })
+                body: JSON.stringify({ winner: this.state.winner })
             })
             .then(respond =>
 
@@ -188,7 +188,21 @@ class TicTacToeV2 extends Component {
         return (
 
             <Fragment>
-                <Player handleSubmit={this.handleSubmit} currentPlayer={this.state.player} handleInputChange={this.handleInputChange}  />
+                
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+
+                    <h3>Player {this.state.player}turn</h3>
+                    <label>
+                        Player X
+                   <input type="text" name="firstPlayer" placeholder="X" onChange={(e) => this.handleInputChange(e)} />
+                    </label>
+                    <label>
+                        Player O
+                  <input type="text" name="secondPlayer" placeholder="O" onChange={(e) => this.handleInputChange(e)} />
+                    </label>
+                    <input type="submit" value="start" />
+
+                </form>
                 <div className="container">
 
                     <h1 className="title">TicTacToeV2</h1>

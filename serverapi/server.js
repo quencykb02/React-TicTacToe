@@ -25,14 +25,19 @@ app.use(
 app.post('/tictactoe', (request, respond) => {
     // checken of player en score binnen komen.
     console.log("this player won");
-    console.log(request.body.player)
+    console.log(request.body.winner)
 
     // INSERT INTO stats (player, score) VALUES(?, ?)//
 
 
 
     // update score where player = ? //
-    db.run('UPDATE stats SET score = score + 1 WHERE player = ?', [request.body.player], (err) => {
+    // db.run('UPDATE stats SET score = score + 1 WHERE player = ?', [request.body.player], (err) => {
+    //     if (err) {
+    //         return console.error(err.message);
+    //     }
+    // });
+     db.run('INSERT INTO stats (player, score) VALUES(?, ?)', [request.body.winner], (err) => {
         if (err) {
             return console.error(err.message);
         }
