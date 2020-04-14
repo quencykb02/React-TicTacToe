@@ -30,29 +30,48 @@ app.post('/tictactoe', (request, respond) => {
     // INSERT INTO stats (player, score) VALUES(?, ?)//
 
 
+    // checken of the winnaar in de database zit of niet
+    let winner = null;
+    db.get('SELECT * FROM stats WHERE player = ?', [request.body.winner]), (err, row) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log(row);
+        winner = row;
+    }
 
-    // update score where player = ? //
-    // db.run('UPDATE stats SET score = score + 1 WHERE player = ?', [request.body.player], (err) => {
-    //     if (err) {
-    //         return console.error(err.message);
+    console.log(winner)
+
+    if (winner) {
+        winner.score += 1;
+        db.run('UPDATE stats SET score = ? WHERE player = ?', [winner.score, request.body.winner], (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`UPDATE row`)
+        });
+    } else {
+        db.run('INSERT INTO stats (player, score) VALUES(?, ?)', [request.body.winner, 1], (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log(`INSERT INTO row:`)
+        });
+    }
+
+    console.log(winner);
+    respond.send(winner);
+
+    // db.all('SELECT * FROM stats', (err, row) => {
+    //     console.log(row)
+    //     if (row.length > 0) {
+    //         respond.send(row);
+    //         // respond.json({ row }) // stuur het score op als response naar waar dit gecalled is.
+
+    //     } else {
+    //         respond.status(403).send({ errorCode: '403' });
     //     }
     // });
-     db.run('INSERT INTO stats (player, score) VALUES(?, ?)', [request.body.winner], (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-    });
-
-    db.all('SELECT * FROM stats', (err, row) => {
-        console.log(row)
-        if (row.length > 0) {
-            respond.send(row);
-            // respond.json({ row }) // stuur het score op als response naar waar dit gecalled is.
-
-        } else {
-            respond.status(403).send({ errorCode: '403' });
-        }
-    });
 })
 
 

@@ -107,33 +107,29 @@ class TicTacToeV2 extends Component {
             if (this.state.board[a] && this.state.board[a] === this.state.board[b] && this.state.board[a] === this.state.board[c]) {
 
                 alert('You Won!');
+                let currentWinner = "";
                 if (this.state.player === "X") {
-                    this.setState({
-                        winner: this.state.firstPlayer
-                    })
-
+                    currentWinner = this.state.firstPlayer
                 } else {
-                    this.setState({
-                        winner: this.state.secondPlayer
-                    })
+                    currentWinner = this.state.secondPlayer
                 }
+                
 
-
-                this.postWinner()
+                this.postWinner(currentWinner)
 
             }
         }
     }
 
-    postWinner() {
-
+    postWinner(currentWinner) {
+        console.log(currentWinner)
         fetch("http://localhost:5000/tictactoe",
             {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ winner: this.state.winner })
+                body: JSON.stringify({ winner: currentWinner })
             })
             .then(respond =>
 
@@ -143,11 +139,13 @@ class TicTacToeV2 extends Component {
 
             )
             .then(data => {
-
+                
                 this.setState({
+                    winner: currentWinner,
                     scoreX: data[0].score,
                     scoreO: data[1].score
                 })
+                console.log(currentWinner)
                 console.log(data[0].player)
                 console.log(data[0].score)
 
